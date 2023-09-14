@@ -264,9 +264,9 @@
 								</div>
 								<select class="form-control" id="chucvu">
 									<option>Chọn chức vụ</option>
-									<option>Sếp</option>
-									<option>Trưởng phòng</option>
-									<option>Nhân viên</option>
+									<option value="Sếp">Sếp</option>
+									<option value="Trưởng Phòng">Trưởng phòng</option>
+									<option value="Nhân Viên">Nhân viên</option>
 								</select>
 							</div>
 
@@ -288,7 +288,7 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer" id="modal-footer">
-					<button id="btnThemNV" type="button" class="btn btn-success">Thêm người dùng</button>
+					<button id="btnThemNV" onclick="themNV()" type="button" class="btn btn-success">Thêm người dùng</button>
 					<button id="btnCapNhat" type="button" class="btn btn-success">Cập nhật</button>
 					<button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
 				</div>
@@ -325,10 +325,11 @@
 		});
 	</script>
 
-	<!-- model -->
+	<!-- models -->
     <script src="./js/models/NhanVien.js"></script>
-    <!-- validate -->
-    <script src="./js/util/validate.js"></script>
+	<script src="./js/models/dsnv.js"></script>
+    <!-- validation -->
+    <script src="./js/util/validation.js"></script>
     <!-- controller -->
     <script src="./js/controller/controller.js"></script>
     <!-- my js -->
