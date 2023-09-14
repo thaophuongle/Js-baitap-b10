@@ -289,3 +289,24 @@ function capNhatNhanVien() {
     renderTable(dsnv.staffs);
   }
 }
+
+//tìm kiếm
+document.querySelector("#btnTimNV").onclick = function () {
+  // toLowerCase: convert text về chữ thường
+  // ?. : Optional chaining (?.)
+  var textSearch = document
+    .querySelector("#searchName")
+    .value.trim()
+    ?.toLowerCase();
+  var result = [];
+
+  if (textSearch.length > 0) {
+    result = dsnv.staffs.filter(function (nv) {
+      return nv.xepLoaiNhanVien().toLowerCase().includes(textSearch);
+    });
+
+    renderTable(result);
+  } else {
+    renderTable(dsnv.staffs);
+  }
+};
