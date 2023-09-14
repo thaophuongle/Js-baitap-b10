@@ -1,9 +1,23 @@
 function kiemTraRong(value, idErr, message) {
   if (value.trim() === "") {
     document.querySelector(idErr).innerHTML = message;
+    document.querySelector(idErr).style.display = "block";
     return false;
   } else {
     document.querySelector(idErr).innerHTML = "";
+    document.querySelector(idErr).style.display = "none";
+    return true;
+  }
+}
+
+function kiemTraRongSo(value, idErr, message) {
+  if (value === "") {
+    document.querySelector(idErr).innerHTML = message;
+    document.querySelector(idErr).style.display = "block";
+    return false;
+  } else {
+    document.querySelector(idErr).innerHTML = "";
+    document.querySelector(idErr).style.display = "none";
     return true;
   }
 }
@@ -15,9 +29,11 @@ function kiemTraEmail(value, idErr, message) {
   var isEmail = re.test(value);
   if (isEmail) {
     document.querySelector(idErr).innerHTML = "";
+    document.querySelector(idErr).style.display = "none";
     return true;
   } else {
     document.querySelector(idErr).innerHTML = message;
+    document.querySelector(idErr).style.display = "block";
     return false;
   }
 }
@@ -29,9 +45,11 @@ function kiemTraChuoi(value, idErr, message) {
   var isString = re.test(value);
   if (isString) {
     document.querySelector(idErr).innerHTML = "";
+    document.querySelector(idErr).style.display = "none";
     return true;
   } else {
     document.querySelector(idErr).innerHTML = message;
+    document.querySelector(idErr).style.display = "block";
     return false;
   }
 }
@@ -43,9 +61,11 @@ function kiemTraMatKhau(value, idErr, message) {
   var isPassword = re.test(value);
   if (isPassword) {
     document.querySelector(idErr).innerHTML = "";
+    document.querySelector(idErr).style.display = "none";
     return true;
   } else {
     document.querySelector(idErr).innerHTML = message;
+    document.querySelector(idErr).style.display = "block";
     return false;
   }
 }
@@ -54,18 +74,35 @@ function kiemTraDoDai(value, min, max, idErr, message) {
   var length = value.length;
   if (length >= min && length <= max) {
     document.querySelector(idErr).innerHTML = "";
+    document.querySelector(idErr).style.display = "none";
     return true;
   } else {
     document.querySelector(idErr).innerHTML = message;
+    document.querySelector(idErr).style.display = "block";
     return false;
   }
 }
+
+function kiemTraChucVu(value, idErr, message) {
+  if (value === "Chọn chức vụ") {
+    getEle(idErr).innerHTML = message;
+    document.querySelector(idErr).style.display = "block";
+    return false;
+  } else {
+    getEle(idErr).innerHTML = "";
+    document.querySelector(idErr).style.display = "none";
+    return true;
+  }
+}
+
 function kiemTraNumberRange(value, min, max, idErr, message) {
-  if (value >= min && value <= max) {
+  if (value >= min || value <= max) {
     document.querySelector(idErr).innerHTML = "";
+    document.querySelector(idErr).style.display = "none";
     return true;
   } else {
     document.querySelector(idErr).innerHTML = message;
+    document.querySelector(idErr).style.display = "block";
     return false;
   }
 }
@@ -77,9 +114,11 @@ function kiemTraTrung(id, dsnv, idErr, message) {
 
   if (viTri != -1) {
     document.querySelector(idErr).innerHTML = message;
+    document.querySelector(idErr).style.display = "block";
     return false;
   } else {
     document.querySelector(idErr).innerHTML = "";
+    document.querySelector(idErr).style.display = "none";
     return true;
   }
 }
@@ -91,9 +130,11 @@ function kiemTraSo(value, idErr, message) {
   console.log("isString: ", isString);
   if (isString) {
     document.querySelector(idErr).innerHTML = "";
+    document.querySelector(idErr).style.display = "none";
     return true;
   } else {
     document.querySelector(idErr).innerHTML = message;
+    document.querySelector(idErr).style.display = "block";
     return false;
   }
 }

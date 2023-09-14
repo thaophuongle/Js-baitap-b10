@@ -35,9 +35,9 @@ function NhanVien(
     var xepLoai = "";
     if (this.gioLam >= 192) {
       xepLoai = "Xuất Sắc";
-    } else if (this.gioLam >= 176) {
+    } else if (this.gioLam >= 176 && this.gioLam < 192) {
       xepLoai = "Giỏi";
-    } else if (this.gioLam >= 160) {
+    } else if (this.gioLam >= 160 && this.gioLam < 176) {
       xepLoai = "Khá";
     } else {
       xepLoai = "Trung Bình";

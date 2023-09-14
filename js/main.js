@@ -36,7 +36,8 @@ function renderTable(listArr) {
         <td>${nhanVien.tinhTongLuong()}</td>
         <td>${nhanVien.xepLoaiNhanVien()}</td>
         <td>
-          <button class="btn btn-warning" onclick="editNV('${
+          <button class="btn btn-warning" data-toggle="modal"
+          data-target="#myModal" onclick="editNV('${
             nhanVien.taiKhoan
           }')">Edit</button>
           <button class="btn btn-danger" onclick="deleteNV('${
@@ -123,7 +124,7 @@ function themNV() {
     kiemTraMatKhau(
       nv.matKhau,
       "#tbMatKhau",
-      "Mật khẩu phải có 8 đến 20 ký tự, trong đó có ít nhất một chữ thường, một chữ hoa, một chữ số và một ký tự đặc biệt"
+      "Mật khẩu phải có 6 đến 10 ký tự, trong đó có ít nhất một chữ thường, một chữ hoa, một chữ số và một ký tự đặc biệt"
     );
 
   //kiểm tra ngày lam
@@ -131,7 +132,7 @@ function themNV() {
 
   //kiểm tra lương cơ bản
   valid &=
-    kiemTraRong(
+    kiemTraRongSo(
       nv.luongCoBan,
       "#tbLuongCB",
       "Tên nhân viên không được để trống !"
@@ -146,11 +147,15 @@ function themNV() {
     );
 
   //kiểm tra chuc vu
-  valid &= kiemTraRong(nv.chucVu, "#tbChucVu", "Chức vụ không được để trống !");
+  valid &= kiemTraChucVu(
+    nv.chucVu,
+    "#tbChucVu",
+    "Chức vụ không được để trống !"
+  );
 
   //kiểm tra giờ làm
   valid &=
-    kiemTraRong(
+    kiemTraRongSo(
       nv.gioLam,
       "#tbGiolam",
       "Tên nhân viên không được để trống !"
@@ -169,6 +174,117 @@ function themNV() {
     var data = JSON.stringify(dsnv.staffs);
     console.log("data: ", data);
     localStorage.setItem("DSNV", data);
+    resetForm();
+    renderTable(dsnv.staffs);
+  }
+}
+
+function deleteNV(taiKhoan) {
+  dsnv._xoaNhanVien(taiKhoan);
+  renderTable(dsnv.staffs);
+}
+
+function editNV(taiKhoan) {
+  var nv = dsnv._layThongTinNhanVien(taiKhoan);
+  if (nv) {
+    getEle("#tknv").value = nv.taiKhoan;
+    getEle("#tknv").disabled = true;
+    getEle("#name").value = nv.hoTen;
+    getEle("#email").value = nv.email;
+    getEle("#password").value = nv.matKhau;
+    getEle("#datepicker").value = nv.ngayLam;
+    getEle("#luongCB").value = nv.luongCoBan;
+    getEle("#chucvu").value = nv.chucVu;
+    getEle("#gioLam").value = nv.gioLam;
+  }
+}
+
+function capNhatNhanVien() {
+  var nv = layThongTinTuForm();
+
+  var valid =
+    kiemTraRong(
+      nv.taiKhoan,
+      "#tbTKNV",
+      "Tài khoản viên không được để trống !"
+    ) &&
+    kiemTraTrung(
+      nv.taiKhoan,
+      dsnv.staffs,
+      "#tbTKNV",
+      "Tài khoản nhân viên đã tồn tại"
+    ) &&
+    kiemTraSo(nv.taiKhoan, "#tbTKNV", "Tài khoản chỉ được nhập số") &&
+    kiemTraDoDai(
+      nv.taiKhoan,
+      4,
+      6,
+      "#tbTKNV",
+      "Tài khoản nhân viên phải từ 4~6 ký tự !"
+    );
+
+  //kiểm tra tên
+  valid &=
+    kiemTraRong(nv.hoTen, "#tbTen", "Tên nhân viên không được để trống !") &&
+    kiemTraChuoi(nv.hoTen, "#tbTen", "Tên nhân viên phải là chữ !");
+
+  //kiểm tra định dạng email
+  valid &=
+    kiemTraRong(nv.email, "#tbEmail", "Email không được để trống !") &&
+    kiemTraEmail(nv.email, "#tbEmail", "Email không đúng định dạng !");
+
+  // kiểm tra mật khẩu
+  valid &=
+    kiemTraRong(nv.matKhau, "#tbMatKhau", "Mật khẩu không được để trống !") &&
+    kiemTraMatKhau(
+      nv.matKhau,
+      "#tbMatKhau",
+      "Mật khẩu phải có 6 đến 10 ký tự, trong đó có ít nhất một chữ thường, một chữ hoa, một chữ số và một ký tự đặc biệt"
+    );
+
+  //kiểm tra ngày lam
+  valid &= kiemTraRong(nv.ngayLam, "#tbNgay", "Ngày làm không được để trống !");
+
+  //kiểm tra lương cơ bản
+  valid &=
+    kiemTraRongSo(
+      nv.luongCoBan,
+      "#tbLuongCB",
+      "Tên nhân viên không được để trống !"
+    ) &&
+    kiemTraSo(nv.luongCoBan, "#tbLuongCB", "Điểm chỉ được nhập số !") &&
+    kiemTraNumberRange(
+      nv.luongCoBan,
+      1000000,
+      20000000,
+      "#tbLuongCB",
+      "Lương cơ bản phải từ 1,000,000 - 20,000,000"
+    );
+
+  //kiểm tra chuc vu
+  valid &= kiemTraChucVu(
+    nv.chucVu,
+    "#tbChucVu",
+    "Chức vụ không được để trống !"
+  );
+
+  //kiểm tra giờ làm
+  valid &=
+    kiemTraRongSo(
+      nv.gioLam,
+      "#tbGiolam",
+      "Tên nhân viên không được để trống !"
+    ) &&
+    kiemTraSo(nv.gioLam, "#tbGiolam", "Điểm chỉ được nhập số !") &&
+    kiemTraNumberRange(
+      nv.gioLam,
+      80,
+      200,
+      "#tbGiolam",
+      "Giờ làm phải từ 80 - 200 giờ"
+    );
+  if (valid) {
+    dsnv._capNhatNhanVien(nv);
     resetForm();
     renderTable(dsnv.staffs);
   }
